@@ -1,8 +1,9 @@
 package com.iceprojects.guestlogix_mobile;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class EpisodeModel {
+public class EpisodeModel implements Serializable {
 
     private int iD;
     private String name;

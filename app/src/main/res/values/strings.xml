@@ -93,8 +93,12 @@
 
     <string name="home_activity_header">Rick &amp; Morty</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="episode_activity_header">Episode</string>
+    <string name="character_activity_header">Character</string>
 
+    <string name="header_alive">Alive</string>
+    <string name="header_dead">Dead</string>
 
-    <string name="list_tv_head_prefix">Episode: </string>
+    <string name="list_tv_head_prefix">Episode :</string>
 
 </resources>

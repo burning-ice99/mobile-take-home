@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,9 +22,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AsyncDelegateInterface{
 
     RecyclerView recyclerView;
+    Button prevBtn, nextBtn;
     MyAdapter myAdapter = null;
     private static final String URL = "https://rickandmortyapi.com/api/episode/";
-    String[] strings = {"Baby 1", "Baby 2", "Baby 3", "Baby 4", "Baby 5"};
+    String prevURL = "", nextURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements AsyncDelegateInte
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getAllEpisodes(URL);
         initUI();
+        getAllEpisodes(URL);
 
     }
 
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements AsyncDelegateInte
         recyclerView = findViewById(R.id.mainRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //recyclerView.setAdapter(myAdapter);
+        prevBtn = findViewById(R.id.btn_prev);
+        prevBtn.setEnabled(false);
+        nextBtn = findViewById(R.id.btn_next);
+        nextBtn.setEnabled(false);
 
     }
 
@@ -81,13 +87,55 @@ public class MainActivity extends AppCompatActivity implements AsyncDelegateInte
         //myAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(myAdapter);
 
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllEpisodes(prevURL);
+            }
+        });
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllEpisodes(nextURL);
+            }
+        });
+
     }
 
     @Override
     public void nextPageURL(String url) {
 
-        getAllEpisodes(url);
+        nextURL = url;
+        //getAllEpisodes(url);
+        if (!url.equalsIgnoreCase("")){
+            nextBtn.setEnabled(true);
+        }
+        else {
+            nextBtn.setEnabled(false);
+        }
 
+    }
+
+    @Override
+    public void prevPageURL(String url) {
+        prevURL = url;
+        if (!url.equalsIgnoreCase("")){
+            prevBtn.setEnabled(true);
+        }
+        else {
+            prevBtn.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (prevBtn.isEnabled()){
+            getAllEpisodes(prevURL);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     public static String[] toStringArray(JSONArray array) {

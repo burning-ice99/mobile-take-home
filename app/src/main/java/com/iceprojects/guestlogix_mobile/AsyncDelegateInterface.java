@@ -6,5 +6,6 @@ public interface AsyncDelegateInterface {
 
     void processFinishedData(JSONArray jo);
     void nextPageURL(String url);
+    void prevPageURL(String url);
 
 }

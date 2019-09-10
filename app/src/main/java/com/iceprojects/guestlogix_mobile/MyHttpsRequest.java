@@ -27,7 +27,7 @@ import javax.net.ssl.SSLSocketFactory;
 public class MyHttpsRequest extends AsyncTask<String, Integer, JSONObject> {
 
     private static final String TAG = "MyHttpsRequest";
-    public AsyncDelegateInterface delegate = null;
+    AsyncDelegateInterface delegate = null;
 
     @Override
     protected void onPreExecute() {
@@ -94,13 +94,17 @@ public class MyHttpsRequest extends AsyncTask<String, Integer, JSONObject> {
             if (jo.has("info")) {
                 info = jo.getJSONObject("info");
             }
+            if (info.has("next")){
+                delegate.nextPageURL(info.getString("next"));
+                Log.d(TAG, "onPostExecute: " + info.getString("next"));
+            }
+            if (info.has("prev")){
+                delegate.prevPageURL(info.getString("prev"));
+                Log.d(TAG, "onPostExecute: " + info.getString("prev"));
+            }
             if (jo.has("results")){
                 delegate.processFinishedData(jo.getJSONArray("results"));
                 Log.d(TAG, "onPostExecute: " + jo.getJSONArray("results"));
-            }
-            if (info.has("next") && !info.getString("next").equals("")){
-                delegate.nextPageURL(info.getString("next"));
-                Log.d(TAG, "onPostExecute: " + info.getString("next"));
             }
         } catch (JSONException e) {
             e.printStackTrace();

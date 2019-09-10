@@ -10,9 +10,12 @@
     android:layout_height="50dp">
 
     <TextView
-        android:id="@+id/item_tv_head"
+        android:id="@+id/item_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Do Do Do"/>
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text=""/>
 
 </LinearLayout>
